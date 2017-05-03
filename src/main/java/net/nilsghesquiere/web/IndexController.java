@@ -56,6 +56,7 @@ public class IndexController {
 		}
 	}
 	
+	/*
 	@RequestMapping("/initialize.html")
 	ModelAndView initialize() {
 		Role role = new Role("appadmin");
@@ -68,6 +69,7 @@ public class IndexController {
 		counterService.create(counter);
 		return new ModelAndView(VIEW);
 	}
+	*/
 	
 	@PreAuthorize("hasAuthority('appadmin')")
 	@RequestMapping("/start.html")
