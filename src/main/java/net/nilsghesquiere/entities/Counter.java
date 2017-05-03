@@ -40,7 +40,7 @@ public class Counter implements Serializable{
 		this.timeStart = timeStart;
 		this.duration = duration;
 		if (timeStart != null){
-			this.timeEnd = timeStart.plus(duration);
+			this.timeEnd = timeStart.plus(duration).minusSeconds(1L);
 		} else {
 			timeEnd= null;
 		}
@@ -62,7 +62,7 @@ public class Counter implements Serializable{
 	public void setTimeStart(ZonedDateTime timeStart) {
 		this.timeStart = timeStart;
 		if (timeStart != null){
-			setTimeEnd(timeStart.plus(this.duration));
+			setTimeEnd(timeStart.plus(this.duration).minusSeconds(1L));
 		} else {
 			setTimeEnd(null);
 		}
