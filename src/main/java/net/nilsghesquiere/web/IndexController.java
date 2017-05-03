@@ -3,6 +3,7 @@ package net.nilsghesquiere.web;
 import java.time.Duration;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -46,9 +47,13 @@ public class IndexController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	ModelAndView index() {
-		logger.info("Index requested");
-		return new ModelAndView(VIEW);
-		//return new ModelAndView(VIEW).addObject(counterService.read(0));
+		Counter counter = counterService.read(1);
+		ModelAndView model = new ModelAndView(VIEW).addObject("counter",counter);
+		if (counter.isActive()){
+			return model.addObject("formatedDateTime", counter.getTimeEnd().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+		} else {
+			return model;
+		}
 	}
 	
 	@RequestMapping("/initialize.html")
@@ -68,20 +73,26 @@ public class IndexController {
 	@RequestMapping("/start.html")
 	ModelAndView start() {
 		ZonedDateTime timeNow = ZonedDateTime.now(zone);
-		Counter counter = counterService.read(0);
-		counter.setActive(true);
-		counter.setTimeStart(timeNow);
-		counterService.update(counter);
-		logger.info("Timer started");
-		return new ModelAndView(REDIRECT_TO_INDEX);
+		Counter counter = counterService.read(1);
+		if(!counter.isActive()){
+			counter.setActive(true);
+			counter.setTimeStart(timeNow);
+			counterService.update(counter);
+			logger.info("Timer started [start=" + counter.getTimeStart() + ",end=" + counter.getTimeEnd() + "]");
+			return new ModelAndView(REDIRECT_TO_INDEX);
+		} else {
+			return new ModelAndView(VIEW).addObject("failMessage","Counter is al gestart");
+		}
 	}
 	
 	@PreAuthorize("hasAuthority('appadmin')")
 	@RequestMapping("/reset.html")
 	ModelAndView reset() {
-		Counter counter = counterService.read(0);
+		Counter counter = counterService.read(1);
 		counter.setActive(false);
 		counter.setTimeStart(null);
+		counterService.update(counter);
+		logger.info("Timer reset");
 		return new ModelAndView(REDIRECT_TO_INDEX);
 	}
 	

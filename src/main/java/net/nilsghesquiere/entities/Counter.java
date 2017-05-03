@@ -29,12 +29,12 @@ public class Counter implements Serializable{
 	@Column
 	Duration duration;
 	@Column
-	Boolean active;
+	boolean active;
 	
 	public Counter() {
 	}
 
-	public Counter(String name, ZonedDateTime timeStart, Duration duration, Boolean active) {
+	public Counter(String name, ZonedDateTime timeStart, Duration duration, boolean active) {
 		//this.duration = Duration.ofHours(3L);
 		this.name = name;
 		this.timeStart = timeStart;
@@ -84,16 +84,14 @@ public class Counter implements Serializable{
 		this.duration = duration;
 	}
 
-	public Boolean getActive() {
+	public boolean isActive() {
 		return active;
 	}
 
-	public void setActive(Boolean active) {
+	public void setActive(boolean active) {
 		this.active = active;
 	}
 	
-	
-	//TODO start, eind, naam
 	//Werking: Klik op knop, start = nu, eind binnen 3u, actief ja.
 	//resetknop: actief op nee zetten, gewone knop: opnieuw vullen
 }

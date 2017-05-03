@@ -44,10 +44,12 @@ dependencies {
     //spring dev tools
     //compile("org.springframework.boot:spring-boot-devtools")
     //bootstrap 
-    compile("org.webjars:bootstrap:3.3.2")
+	compile("org.webjars:bootstrap:3.3.2")
+	compile("org.webjars:jquery:3.2.0")
     //postgresql connector
     //compile("org.postgresql:postgresql")
     compile(group: 'org.postgresql', name: 'postgresql', version: '42.0.0')
+    
     //angularJS
     //compile("org.webjars:angularjs:1.6.1")
     //Jackson voor JSON
